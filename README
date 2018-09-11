@@ -1,0 +1,1 @@
+This is a simple DCGAN implementation in pytorch, supporting tensorboard logging.
