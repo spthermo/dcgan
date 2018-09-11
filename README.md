@@ -1,5 +1,5 @@
 # DCGAN
-This is an abstract implementation of a DCGAN architecture proposed in [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks). The model is developed in pytorch and trained on CelebA face dataset.
+This is an abstract implementation of a DCGAN architecture proposed in [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434). The model is developed in pytorch and trained on CelebA face dataset.
 
 ## Prerequisites
 The architecture has been implemented using the following:
