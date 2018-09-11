@@ -11,7 +11,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--netG', default='./models/netG_e50.pth', help='path to trained generator')
+parser.add_argument('--netG', default='', help='path to trained generator')
 parser.add_argument('--nz', type=int, default='100', help='size of the latent z vector')
 parser.add_argument('--ngf', type=int, default=64)
 parser.add_argument('--ndf', type=int, default=64)
