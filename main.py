@@ -198,31 +198,31 @@ for epoch in range(opt.niter):
     for i, data in enumerate(train_loader,0):
 
         # train Discriminator with real samples
-        netD.zero_grad()
-        real_cpu = data[0].to(device)
-        batch_size = real_cpu.size(0)
+        optD.zero_grad()
+        real_data = data[0].to(device)
+        batch_size = real_data.size(0)
         label = torch.full((batch_size,), real_label, device=device)
 
-        out = netD(real_cpu)
+        out = netD(real_data)
         errD_real = criterion(out, label)
-        errD_real.backward()
         D_x = out.mean().item()
 
         # train Discriminator with fake samples
         noise = torch.randn(batch_size, nz, 1, 1, device=device)
-        fake_cpu = netG(noise)
-        label.fill_(fake_label)
-        out = netD(fake_cpu.detach())
+	label_f = label.clone()
+	label_f.fill_(fake_label)        
+	fake_data = netG(noise)
+        out = netD(fake_data.detach())
         errD_fake = criterion(out, label)
-        errD_fake.backward()
         D_G_z1 = out.mean().item()
         errD = errD_real + errD_fake
+	errD.backward()
         optD.step()
 
         # update Generator
-        netG.zero_grad()
-        label.fill_(real_label)
-        out = netD(fake_cpu)
+        optG.zero_grad()
+	fake_data = netG(noise)
+        out = netD(fake_data)
         errG = criterion(out, label)
         errG.backward()
         D_G_z2 = out.mean().item()
@@ -259,7 +259,7 @@ for epoch in range(opt.niter):
 
     # (3) generated image samples
     info = {
-        'images': fake_cpu.view(-1, 3, 64, 64)[:10].cpu().detach().numpy()
+        'images': fake_data.view(-1, 3, 64, 64)[:10].cpu().detach().numpy()
     }
     for tag, images in info.items():
         logger.image_summary(tag, images, epoch)
